@@ -1,14 +1,27 @@
 <html lang="en-US">
-<head>
-    <title>Recipe List</title>
-    <h1>Recipe Book</h1>
-    <h2>Recipe {{ recipe.name }}</h2>
-</head>
-<body>
-    <ul>
-        {% for ingredient in recipe.ingredients.all %}
-            <li>{{ ingredient.ingredient.name }} - {{ ingredient.quantity }}</li>
-        {% endfor %}
-    </ul>
-</body>
+    {% extends "base.html" %}
+
+    {% block title %}Recipe List{% endblock title %}
+    {% block content %}
+        {% if request.user.is_authenticated %}
+            <head>
+                <h1>Hello, {{ request.user.username }}</h1>
+                <h2>Recipe {{ recipe.name }}</h2>
+            </head>
+            <body>
+                <ul>
+                    {% for ingredient in recipe.ingredients.all %}
+                        <li>{{ ingredient.ingredient.name }} - {{ ingredient.quantity }}</li>
+                    {% endfor %}
+                </ul>
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">LOG OUT</button>
+                </form>
+            </body>
+        {% else %}
+            <a href="{% url 'login' %}">LOGIN</a>
+        {% endif %}
+    {% endblock content %}
 </html>

@@ -6,7 +6,6 @@ from .models import Recipe, Ingredient, RecipeIngredient
 class RecipeIngredientInline(admin.TabularInline):
     model = RecipeIngredient
 
-
 class RecipeAdmin(admin.ModelAdmin):
     model = Recipe
     inlines = [RecipeIngredientInline,]

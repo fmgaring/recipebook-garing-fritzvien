@@ -1,13 +1,19 @@
 <html lang="en-US">
-<head>
-    <title>Recipe List</title>
-    <h1>Recipe Book</h1>
-</head>
-<body>
-    <ul>
-        {% for recipe in recipe_list %}
-            <li><a href='{{ recipe.get_absolute_url }}'>Recipe {{ recipe }}</a></li>
-        {% endfor %}
-    </ul>
-</body>
+    {% extends "base.html" %}
+
+    {% block title %}Recipe List{% endblock title %}
+    {% block content %}
+        <body>
+            <ul>
+                {% for recipe in recipe_list %}
+                    <li><a href='{{ recipe.get_absolute_url }}'>Recipe {{ recipe }}</a></li>
+                {% endfor %}
+            </ul>
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">LOG OUT</button>
+            </form>
+        </body>
+    {% endblock content %}
 </html>
